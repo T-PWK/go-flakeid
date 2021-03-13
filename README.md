@@ -1,4 +1,4 @@
-# Flake identifier generator in Go
+# Flake - decentralized, k-ordered identifier generation in Go
 
 [![Build Status](https://travis-ci.com/T-PWK/go-flakeid.svg?branch=master)](https://travis-ci.com/T-PWK/go-flakeid)
 [![GitHub issues](https://img.shields.io/github/issues/T-PWK/go-flakeid.svg)](https://github.com/T-PWK/go-flakeid/issues)
@@ -6,7 +6,13 @@
 [![Coverage Status](https://coveralls.io/repos/github/T-PWK/go-flakeid/badge.svg?branch=master)](https://coveralls.io/github/T-PWK/go-flakeid?branch=master)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](http://blog.abelotech.com/mit-license)
 
-Flake ID generator yields k-ordered, conflict-free ids in a distributed environment.
+Flake ID generator produces 64-bit, k-ordered, conflict-free ids in a distributed environment.
+
+To install
+
+```
+go get -u github.com/t-pwk/go-flakeid
+```
 
 ## Flake Numbers Format
 

@@ -85,7 +85,6 @@ func (f *FlakeID) nextID() uint64 {
 // NextID yields k-ordered, conflict-free identifier.
 func (f *FlakeID) NextID() uint64 {
 	f.mutex.Lock()
-	id := f.nextID()
-	f.mutex.Unlock()
-	return id
+	defer f.mutex.Unlock()
+	return f.nextID()
 }

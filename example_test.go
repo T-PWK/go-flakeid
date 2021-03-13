@@ -2,10 +2,55 @@ package flakeid_test
 
 import (
 	"fmt"
+	"testing"
 	"time"
 
 	"github.com/t-pwk/go-flakeid"
 )
+
+const count = 10_000
+
+func BenchmarkNextID(b *testing.B) {
+	gen := flakeid.FlakeID{}
+	for i := 0; i < b.N; i++ {
+		gen.NextID()
+	}
+}
+
+func TestNoDuplicates(t *testing.T) {
+	var ids [count]uint64
+	dup := make(map[uint64]int, count)
+	gen := flakeid.FlakeID{}
+
+	for i := 0; i < count; i++ {
+		ids[i] = gen.NextID()
+	}
+
+	for _, id := range ids {
+		dup[id]++
+		if dup[id] > 1 {
+			t.Errorf("Duplicate identifier found: %d", id)
+		}
+	}
+}
+
+func TestDatacenter(t *testing.T) {
+	gen := flakeid.FlakeID{DatacenterID: 7}
+	id := fmt.Sprintf("%b", gen.NextID())
+
+	if id[41:51] != "0011100000" {
+		t.Error("Invalid id bits")
+	}
+}
+
+func TestWorker(t *testing.T) {
+	gen := flakeid.FlakeID{WorkerID: 7}
+	id := fmt.Sprintf("%b", gen.NextID())
+
+	if id[41:51] != "0000000111" {
+		t.Error("Invalid id bits")
+	}
+}
 
 func Example() {
 	gen := flakeid.FlakeID{}
